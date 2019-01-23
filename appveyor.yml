@@ -25,4 +25,8 @@ artifacts:
 clone_depth: 1
 
 test: off
-deploy: off
+deploy:
+  provider: NuGet
+  server:
+  api_key:
+    secure: c7PlM++2idTkMH8VqpTaPIqM8T0iSBciBVrOO8tBKUtW/y3rcyW8sGz+ml7Zrubf
