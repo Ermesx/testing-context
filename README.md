@@ -88,4 +88,5 @@ public class TestService_Tests : TestingContext<TestService>
 }
 ```
 
-## Feedback welcome!
+More information and usecases in article:
+https://dotnetcoretutorials.com/2018/05/12/the-testing-context/
