@@ -7,8 +7,7 @@
         <Description>Simple class for testing context covers common test issues</Description>
         <Authors>Wojciech Gadziński</Authors>
         <PackageProjectUrl>https://github.com/Ermesx/testing-context</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/Ermesx/testing-context</RepositoryUrl>
-        <PackageLicenseUrl>https://github.com/Ermesx/testing-context/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/Ermesx/testing-context</RepositoryUrl>        
         <PackageTags>Test;Testing;Context;AutoFixture;Fixture;xunit;moq</PackageTags>
     </PropertyGroup>
 

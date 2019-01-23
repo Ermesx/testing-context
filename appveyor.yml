@@ -19,7 +19,7 @@ build_script:
 - cmd: dotnet pack -c Release -o artifacts
   
 artifacts:
-- path: 'artifacts\*.nupkg'
+- path: '**\*.nupkg'
   name: AutoTesting  
 
 clone_depth: 1
