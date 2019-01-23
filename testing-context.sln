@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TC", "TC\TC.csproj", "{04C8E9C8-587C-49BF-8B9D-EC76EDD0D53C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoTesting", "AutoTesting\AutoTesting.csproj", "{04C8E9C8-587C-49BF-8B9D-EC76EDD0D53C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-﻿namespace TC
+﻿namespace AutoTesting
 {
     using System;
     using System.Collections.Generic;
