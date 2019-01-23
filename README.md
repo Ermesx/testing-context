@@ -1,4 +1,4 @@
-# testing-context
+# Testing Context
 Inspired by article https://dotnetcoretutorials.com/2018/05/12/the-testing-context/
 
 Library with class which covers common testing issues below.
