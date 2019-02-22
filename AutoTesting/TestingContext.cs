@@ -13,7 +13,17 @@
         private readonly Dictionary<Type, Mock> _injectedMocks;
         private readonly Dictionary<Type, object> _injectedConcreteClasses;
 
+        /// <summary>
+        /// Create instance of testing class and injects it into the final fixture
+        /// </summary>
+        /// <returns></returns>
         public T ClassUnderTest => _fixture.Create<T>();
+
+        /// <summary>
+        /// Create instance of any class as data object
+        /// </summary>
+        /// <returns></returns>
+        public TMock CreateMockData<TMock>() => _fixture.Create<TMock>();
 
         protected TestingContext()
         {
