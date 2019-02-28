@@ -20,10 +20,10 @@
         public T ClassUnderTest => _fixture.Create<T>();
 
         /// <summary>
-        /// Create instance of any class as data object
+        /// Create instance of any class with assigned data within
         /// </summary>
         /// <returns></returns>
-        public TMock CreateMockData<TMock>() => _fixture.Create<TMock>();
+        public TData MockData<TData>() => _fixture.Create<TData>();
 
         protected TestingContext()
         {
@@ -39,7 +39,7 @@
         /// </summary>
         /// <typeparam name="TMockType"></typeparam>
         /// <returns></returns>
-        public Mock<TMockType> GetMockFor<TMockType>()
+        public void ConfigureMock<TMockType>(Action<Mock<TMockType>> configure)
             where TMockType : class
         {
             var existingMock = _injectedMocks.FirstOrDefault(x => x.Key == typeof(TMockType));
@@ -51,7 +51,8 @@
                 _fixture.Inject(newMock.Object);
             }
 
-            return existingMock.Value as Mock<TMockType>;
+            var mock = existingMock.Value as Mock<TMockType>;
+            configure(mock);
         }
 
         /// <summary>
@@ -65,7 +66,7 @@
             var existingClass = _injectedConcreteClasses.FirstOrDefault(x => x.Key == typeof(TClassType));
             if (existingClass.Key != null)
             {
-                throw new Exception($"{injectedClass.GetType().Name} has been injected more than once");
+                throw new ArgumentException($"{injectedClass.GetType().Name} has been injected more than once");
             }
 
             _injectedConcreteClasses.Add(typeof(TClassType), injectedClass);
