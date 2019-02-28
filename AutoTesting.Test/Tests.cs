@@ -2,9 +2,10 @@ namespace AutoTesting.Test
 {
     using System;
     using FluentAssertions;
+    using TestItems;
     using Xunit;
 
-    public class Tests : TestingContext<Tests.TestClass>
+    public class Tests : TestingContext<TestClass>
     {
         [Fact]
         public void Can_configure_mock()
@@ -42,7 +43,7 @@ namespace AutoTesting.Test
         {
             // Arrange
             var specClass = new SpecFoo();
-            InjectClassFor<IFoo>(specClass);
+            Inject<IFoo>(specClass);
             var testClass = ClassUnderTest;
 
             // Act 
@@ -53,13 +54,28 @@ namespace AutoTesting.Test
         }
 
         [Fact]
+        public void Can_inject_enum()
+        {
+            // Arrange
+            const TestEnum @enum = TestEnum.T1;
+            Inject(@enum);
+            var testClass = ClassUnderTest;
+
+            // Act 
+            var testEnum = testClass.GetEnum();
+
+            // Assert
+            testEnum.Should().Be(@enum);
+        }
+
+        [Fact]
         public void Cannot_inject_the_same_class_twice()
         {
             // Act & Assert
             Assert.Throws<ArgumentException>(() =>
             {
-                InjectClassFor<IFoo>(new SpecFoo());
-                InjectClassFor<IFoo>(new SpecFoo());
+                Inject<IFoo>(new SpecFoo());
+                Inject<IFoo>(new SpecFoo());
             });
         }
 
@@ -75,46 +91,6 @@ namespace AutoTesting.Test
             data.Foo.Should().NotBeNullOrEmpty();
         }
         
-        public class TestClass
-        {
-            private readonly IFoo _foo;
-
-            public TestClass(IFoo foo)
-            {
-                _foo = foo;
-            }
-
-            public string GetBoo()
-            {
-                return _foo.Boo();
-            }
-        }
         
-        public class SpecFoo : IFoo
-        {
-            public string Boo()
-            {
-                return "SpecFoo";
-            }
-        }
-        
-        public class TestDataClass
-        {
-            public TestDataClass(Guid guid)
-            {
-                Guid = guid;
-            }
-
-            public string Foo { get; set; }
-            
-            public string Boo { get; set; }
-            
-            public Guid Guid { get; }
-        }
-        
-        public interface IFoo
-        {
-            string Boo();
-        }
     }
 }

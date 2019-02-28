@@ -11,10 +11,10 @@
     {
         private readonly Fixture _fixture;
         private readonly Dictionary<Type, Mock> _injectedMocks;
-        private readonly Dictionary<Type, object> _injectedConcreteClasses;
+        private readonly Dictionary<Type, object> _injectedConcreteObjects;
 
         /// <summary>
-        /// Create instance of testing class and injects it into the final fixture
+        /// Create instance of testing class from configured fixture
         /// </summary>
         /// <returns></returns>
         public T ClassUnderTest => _fixture.Create<T>();
@@ -31,11 +31,11 @@
             _fixture.Customize(new AutoMoqCustomization());
 
             _injectedMocks = new Dictionary<Type, Mock>();
-            _injectedConcreteClasses = new Dictionary<Type, object>();
+            _injectedConcreteObjects = new Dictionary<Type, object>();
         }
 
         /// <summary>
-        /// Generates a mock for a class and injects it into the final fixture
+        /// Generates a mock for a class/interfaces and injects it into the final fixture
         /// </summary>
         /// <typeparam name="TMockType"></typeparam>
         /// <returns></returns>
@@ -56,21 +56,20 @@
         }
 
         /// <summary>
-        /// Injects a concrete class to be used when generating the fixture. 
+        /// Injects a concrete object to be used when generating the fixture. 
         /// </summary>
         /// <typeparam name="TClassType"></typeparam>
         /// <returns></returns>
-        public void InjectClassFor<TClassType>(TClassType injectedClass)
-            where TClassType : class
+        public void Inject<TClassType>(TClassType injectedObject)
         {
-            var existingClass = _injectedConcreteClasses.FirstOrDefault(x => x.Key == typeof(TClassType));
+            var existingClass = _injectedConcreteObjects.FirstOrDefault(x => x.Key == typeof(TClassType));
             if (existingClass.Key != null)
             {
-                throw new ArgumentException($"{injectedClass.GetType().Name} has been injected more than once");
+                throw new ArgumentException($"{injectedObject.GetType().Name} has been injected more than once");
             }
 
-            _injectedConcreteClasses.Add(typeof(TClassType), injectedClass);
-            _fixture.Inject(injectedClass);
+            _injectedConcreteObjects.Add(typeof(TClassType), injectedObject);
+            _fixture.Inject(injectedObject);
         }
     }
 }
