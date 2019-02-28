@@ -80,7 +80,7 @@ public class TestService_Tests : TestingContext<TestService>
     [Fact]
     public void WhenGetNamesExceptJohnCalled_JohnIsNotReturned()
     {
-        GetMockFor<ITestRepository>().Setup(x => x.GetNames()).Returns(new List<string> { "bob", "john" });
+        ConfigureMock<ITestRepository>(mock => mock.Setup(x => x.GetNames()).Returns(new List<string> { "bob", "john" }));
  
         var result = ClassUnderTest.GetNamesExceptJohn();
  
