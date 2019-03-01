@@ -1,10 +1,15 @@
-# Testing Context
+# AutoTesting
 [![Build status](https://ci.appveyor.com/api/projects/status/rndm33j6725jgdv5?svg=true)](https://ci.appveyor.com/project/Ermesx/testing-context)
 ![](https://img.shields.io/nuget/v/AutoTesting.svg)
 
 Inspired by article https://dotnetcoretutorials.com/2018/05/12/the-testing-context/
 
 Library with class which covers common testing issues below.
+
+#### Install package
+```
+dotnet add package AutoTesting 
+```
 
 ## Testing problems
 
