@@ -6,16 +6,44 @@ Inspired by article https://dotnetcoretutorials.com/2018/05/12/the-testing-conte
 
 Library with class which covers common testing issues below.
 
-#### Install package
-```
-dotnet add package AutoTesting 
-```
-
 ## Testing problems
 
 * Any testing helper should limit the testing scope to a single class only.
 * Changes to a constructor of a class should not require editing all tests for that class.
 * Boilerplate code within the test class should be kept to a minimum.
+
+### What's new in 3.0
+
+Better API naming 
+```diff
+public class TestingContext<T> 
+{
++    T TestObject { get; }
+-    T ClassUnderTest { get; }
+    
++    TData Fixture<TData>();
+-    TData MockData<TData>();
+    
++    Mock<TMockType> Mock<TMockType>() where TMockType : class;
+-    void ConfigureMock<TMockType>(Action<TMockType> configure) where TMockType : class;
+
++    void Inject<TObjectType>(TObjectType injectedObject);
+-    void InjectObject<TObjectType>(TObjectType injectedObject);
+}
+```
+New interface for mocking even TestingContext
+
+```csharp
+public interface ITestingContext<out T> where T : class
+{
+    ...
+}
+```
+
+#### Install package
+```
+dotnet add package AutoTesting 
+```
 
 ## In action
 
@@ -85,9 +113,9 @@ public class TestService_Tests : TestingContext<TestService>
     [Fact]
     public void WhenGetNamesExceptJohnCalled_JohnIsNotReturned()
     {
-        ConfigureMock<ITestRepository>(mock => mock.Setup(x => x.GetNames()).Returns(new List<string> { "bob", "john" }));
+        Mock<ITestRepository>().Setup(x => x.GetNames()).Returns(new List<string> { "bob", "john" });
  
-        var result = ClassUnderTest.GetNamesExceptJohn();
+        var result = TestObject.GetNamesExceptJohn();
  
         Assert.IsNotNull(result);
         Assert.AreEqual(1, result.Count);
