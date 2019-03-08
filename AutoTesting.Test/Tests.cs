@@ -12,8 +12,8 @@ namespace AutoTesting.Test
         {
             // Arrange
             const string text = "boo";
-            ConfigureMock<IFoo>(mock => mock.Setup(x => x.Boo()).Returns(text));
-            var testClass = ClassUnderTest;
+            Mock<IFoo>().Setup(x => x.Boo()).Returns(text);
+            var testClass = TestObject;
             
             // Act
             var boo = testClass.GetBoo();
@@ -27,11 +27,11 @@ namespace AutoTesting.Test
         {
             // Arrange
             const string text = "foo";
-            ConfigureMock<IFoo>(mock => mock.Setup(x => x.Boo()).Returns("boo"));
-            var testClass = ClassUnderTest;
+            Mock<IFoo>().Setup(x => x.Boo()).Returns("boo");
+            var testClass = TestObject;
             
             // Act
-            ConfigureMock<IFoo>(mock => mock.Setup(x => x.Boo()).Returns(text));
+            Mock<IFoo>().Setup(x => x.Boo()).Returns(text);
             
             // Assert
             var boo = testClass.GetBoo();
@@ -44,7 +44,7 @@ namespace AutoTesting.Test
             // Arrange
             var specClass = new SpecFoo();
             Inject<IFoo>(specClass);
-            var testClass = ClassUnderTest;
+            var testClass = TestObject;
 
             // Act 
             var boo = testClass.GetBoo();
@@ -59,7 +59,7 @@ namespace AutoTesting.Test
             // Arrange
             const TestEnum @enum = TestEnum.T1;
             Inject(@enum);
-            var testClass = ClassUnderTest;
+            var testClass = TestObject;
 
             // Act 
             var testEnum = testClass.GetEnum();
@@ -83,14 +83,12 @@ namespace AutoTesting.Test
         public void Can_create_any_mock_data()
         {
             // Act
-            var data = MockData<TestDataClass>();
+            var data = Fixture<TestDataClass>();
 
             // Assert
             data.Guid.Should().NotBeEmpty();
             data.Boo.Should().NotBeNullOrEmpty();
             data.Foo.Should().NotBeNullOrEmpty();
         }
-        
-        
     }
 }

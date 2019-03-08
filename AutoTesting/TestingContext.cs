@@ -7,7 +7,7 @@
     using AutoFixture.AutoMoq;
     using Moq;
 
-    public abstract class TestingContext<T> where T : class
+    public abstract class TestingContext<T> : ITestingContext<T> where T : class
     {
         private readonly Fixture _fixture;
         private readonly Dictionary<Type, Mock> _mocks;
@@ -26,7 +26,7 @@
         /// Create instance of testing class from configured fixture
         /// </summary>
         /// <returns></returns>
-        public T ClassUnderTest => _fixture.Create<T>();
+        public T TestObject => _fixture.Create<T>();
 
         /// <summary>
         /// Create instance of any class with assigned data within
@@ -39,7 +39,7 @@
         /// </summary>
         /// <typeparam name="TMockType"></typeparam>
         /// <returns></returns>
-        public void Mock<TMockType>() where TMockType : class
+        public Mock<TMockType> Mock<TMockType>() where TMockType : class
         {
             var mockType = typeof(TMockType);
             var existingMock = _mocks.FirstOrDefault(x => x.Key == mockType);
