@@ -14,7 +14,7 @@ Library with class which covers common testing issues below.
 
 ### What's new in 3.0
 
-Better API naming 
+* Better API naming 
 ```diff
 public class TestingContext<T> 
 {
@@ -31,13 +31,30 @@ public class TestingContext<T>
 -    void InjectObject<TObjectType>(TObjectType injectedObject);
 }
 ```
-New interface for mocking even TestingContext
+* New interface for mocking even TestingContext
 
 ```csharp
 public interface ITestingContext<out T> where T : class
 {
     ...
 }
+```
+
+* Now you use `VerifyAll` method form Mock in assertions
+
+``` csharp
+[Fact]
+public void WhenGetNamesExceptJohnCalled_JohnIsNotReturned()
+{
+    var mock = Mock<ITestRepository>().Setup(x => x.GetNames()).Returns(new List<string> { "bob", "john" });
+ 
+    var result = TestObject.GetNamesExceptJohn();
+    
+    Assert.IsNotNull(result);
+    ...
+    mock.VerifyAll();
+}
+
 ```
 
 #### Install package
