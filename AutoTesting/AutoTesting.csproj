@@ -3,7 +3,7 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <PackageVersion>1.0.0</PackageVersion>
-        <Title>AutoTesting - testring context</Title>
+        <Title>AutoTesting - testing context</Title>
         <Description>Simple class for testing context covers common test issues https://dotnetcoretutorials.com/2018/05/12/the-testing-context</Description>
         <Authors>Wojciech Gadziński</Authors>
         <PackageProjectUrl>https://github.com/Ermesx/testing-context</PackageProjectUrl>
@@ -12,8 +12,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoFixture.AutoMoq" Version="4.6.0" />
-      <PackageReference Include="AutoFixture.Xunit2" Version="4.6.0" />
+      <PackageReference Include="AutoFixture.AutoMoq" Version="4.8.0" />
+      <PackageReference Include="AutoFixture.Xunit2" Version="4.8.0" />
     </ItemGroup>
 
 </Project>
