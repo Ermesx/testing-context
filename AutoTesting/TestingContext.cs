@@ -5,8 +5,10 @@
     using System.Linq;
     using AutoFixture;
     using AutoFixture.AutoMoq;
+    using AutoFixture.Dsl;
+    using AutoFixture.Kernel;
     using Moq;
-
+    
     public abstract class TestingContext<T> : ITestingContext<T> where T : class
     {
         private readonly Fixture _fixture;
@@ -21,24 +23,30 @@
             _mocks = new Dictionary<Type, Mock>();
             _injectedObjects = new Dictionary<Type, object>();
         }
-        
-        /// <summary>
-        /// Create instance of testing class from configured fixture
-        /// </summary>
-        /// <returns></returns>
+
+        /// <inheritdoc />
+        public void AddCustomization(ICustomization customization)
+        {
+            _fixture.Customize(customization);
+        }
+
+        /// <inheritdoc />
+        public void AddCustomization<TData>(Func<ICustomizationComposer<TData>, ISpecimenBuilder> composerTransformation)
+        {
+            _fixture.Customize<TData>(composerTransformation);
+        }
+
+        /// <inheritdoc />
         public T TestObject => _fixture.Create<T>();
 
-        /// <summary>
-        /// Create instance of any class with assigned data within
-        /// </summary>
-        /// <returns></returns>
-        public TData Fixture<TData>() => _fixture.Create<TData>();
+        /// <inheritdoc />
+        [Obsolete("Use Make<> instead")]
+        public TData Fixture<TData>() => Make<TData>();
+        
+        /// <inheritdoc />
+        public TData Make<TData>() => _fixture.Create<TData>();
 
-        /// <summary>
-        /// Generates a mock for a class/interfaces and injects it into the final fixture
-        /// </summary>
-        /// <typeparam name="TMockType"></typeparam>
-        /// <returns></returns>
+        /// <inheritdoc />
         public Mock<TMockType> Mock<TMockType>() where TMockType : class
         {
             var mockType = typeof(TMockType);
@@ -55,11 +63,7 @@
             return mock;
         }
 
-        /// <summary>
-        /// Injects a concrete object to be used when generating the fixture. 
-        /// </summary>
-        /// <typeparam name="TClassType"></typeparam>
-        /// <returns></returns>
+        /// <inheritdoc />
         public void Inject<TObjectType>(TObjectType injectedObject)
         {
             var objectType = typeof(TObjectType);

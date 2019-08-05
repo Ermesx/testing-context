@@ -83,12 +83,40 @@ namespace AutoTesting.Test
         public void Can_create_any_mock_data()
         {
             // Act
-            var data = Fixture<TestDataClass>();
+            var data = Make<TestDataClass>();
 
             // Assert
             data.Guid.Should().NotBeEmpty();
             data.Boo.Should().NotBeNullOrEmpty();
             data.Foo.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void Can_add_customization_and_it_works()
+        {
+            // Arrange
+            var customization = new TestCustomization();
+            AddCustomization(customization);
+
+            // Act 
+            var data = Make<TestDataClass>();
+
+            // Assert
+            data.Boo.Should().Be(TestCustomization.CustomizedText);
+        }
+        
+        [Fact]
+        public void Can_add_customization_by_function_and_it_works()
+        {
+            // Arrange
+            const string text = "test customization";
+            AddCustomization<TestDataClass>(x => x.With(t => t.Boo, text));
+
+            // Act 
+            var data = Make<TestDataClass>();
+
+            // Assert
+            data.Boo.Should().Be(text);
         }
     }
 }

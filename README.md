@@ -12,6 +12,30 @@ Library with class which covers common testing issues below.
 * Changes to a constructor of a class should not require editing all tests for that class.
 * Boilerplate code within the test class should be kept to a minimum.
 
+### What's new in 3.1
+
+* Add customization API for AutoFixture
+```diff
+public class TestingContext<T> 
+{
++    void AddCustomization(ICustomization customization);
+
++    void AddCustomization<TData>(Func<ICustomizationComposer<TData>, ISpecimenBuilder> composerTransformation);
+}
+```
+
+* Obsolete Fixture method and add new Make method instead
+
+```diff
+public class TestingContext<T> 
+{
++    [Obsolete("Use Make<> instead")]
+     TData Fixture<TData>();
++    TData Make<TData>();
+}
+```
+* Update dependecies
+
 ### What's new in 3.0
 
 * Better API naming 
