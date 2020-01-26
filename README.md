@@ -12,6 +12,10 @@ Library with class which covers common testing issues below.
 * Changes to a constructor of a class should not require editing all tests for that class.
 * Boilerplate code within the test class should be kept to a minimum.
 
+### What's new in 3.2
+
+* Upgrade to .net Core 3+ and update dependencies
+
 ### What's new in 3.1
 
 * Add customization API for AutoFixture
