@@ -50,27 +50,25 @@
         public Mock<TMockType> Mock<TMockType>() where TMockType : class
         {
             var mockType = typeof(TMockType);
-            var existingMock = _mocks.FirstOrDefault(x => x.Key == mockType);
-            if (existingMock.Key == null)
+            return !_mocks.ContainsKey(mockType) ? CreateNew() : _mocks[mockType] as Mock<TMockType>;
+
+            Mock<TMockType> CreateNew()
             {
                 var newMock = new Mock<TMockType>();
-                existingMock = new KeyValuePair<Type, Mock>(mockType, newMock);
-                _mocks.Add(existingMock.Key, existingMock.Value);
+                _mocks.Add(mockType, newMock);
                 _fixture.Inject(newMock.Object);
-            }
 
-            var mock = existingMock.Value as Mock<TMockType>;
-            return mock;
+                return newMock;
+            }
         }
 
         /// <inheritdoc />
         public void Inject<TObjectType>(TObjectType injectedObject)
         {
             var objectType = typeof(TObjectType);
-            var existingObject = _injectedObjects.FirstOrDefault(x => x.Key == objectType);
-            if (existingObject.Key != null)
+            if (_injectedObjects.ContainsKey(objectType))
             {
-                throw new ArgumentException($"{injectedObject.GetType().Name} has been injected more than once");
+                throw new ArgumentException($"{nameof(injectedObject)} has been injected more than once");
             }
 
             _injectedObjects.Add(objectType, injectedObject);
