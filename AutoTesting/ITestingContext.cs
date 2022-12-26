@@ -49,7 +49,7 @@ namespace AutoTesting
         /// <summary>
         /// Injects a concrete object to be used when generating the fixture. 
         /// </summary>
-        /// <typeparam name="TClassType"></typeparam>
+        /// <typeparam name="TObjectType"></typeparam>
         /// <returns></returns>
         void Inject<TObjectType>(TObjectType injectedObject);
     }

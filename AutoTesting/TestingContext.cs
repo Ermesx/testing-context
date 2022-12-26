@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using AutoFixture;
     using AutoFixture.AutoMoq;
     using AutoFixture.Dsl;
@@ -33,7 +32,7 @@
         /// <inheritdoc />
         public void AddCustomization<TData>(Func<ICustomizationComposer<TData>, ISpecimenBuilder> composerTransformation)
         {
-            _fixture.Customize<TData>(composerTransformation);
+            _fixture.Customize(composerTransformation);
         }
 
         /// <inheritdoc />
@@ -71,6 +70,7 @@
                 throw new ArgumentException($"{nameof(injectedObject)} has been injected more than once");
             }
 
+            // It's rare case and not impact on performance of tests code
             _injectedObjects.Add(objectType, injectedObject);
             _fixture.Inject(injectedObject);
         }
