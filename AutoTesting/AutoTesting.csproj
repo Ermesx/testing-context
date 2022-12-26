@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <PackageVersion>1.0.0</PackageVersion>
         <Title>AutoTesting - testing context</Title>
         <Description>Simple class for testing context covers common test issues https://dotnetcoretutorials.com/2018/05/12/the-testing-context</Description>
@@ -12,8 +12,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoFixture.AutoMoq" Version="4.11.0" />
-      <PackageReference Include="AutoFixture.Xunit2" Version="4.11.0" />
+      <PackageReference Include="AutoFixture.AutoMoq" Version="4.17.0" />
+      <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
     </ItemGroup>
 
 </Project>
