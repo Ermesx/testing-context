@@ -39,10 +39,6 @@
         public T TestObject => _fixture.Create<T>();
 
         /// <inheritdoc />
-        [Obsolete("Use Make<> instead")]
-        public TData Fixture<TData>() => Make<TData>();
-        
-        /// <inheritdoc />
         public TData Make<TData>() => _fixture.Create<TData>();
 
         /// <inheritdoc />

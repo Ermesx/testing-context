@@ -30,13 +30,6 @@ namespace AutoTesting
         /// Create instance of any class with assigned data within
         /// </summary>
         /// <returns>Auto created instance</returns>
-        [Obsolete("Use Make<> instead")]
-        TData Fixture<TData>();
-        
-        /// <summary>
-        /// Create instance of any class with assigned data within
-        /// </summary>
-        /// <returns>Auto created instance</returns>
         TData Make<TData>();
 
         /// <summary>
