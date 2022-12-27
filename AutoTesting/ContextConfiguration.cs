@@ -1,4 +1,6 @@
-﻿namespace AutoTesting
+﻿using System.Collections.Immutable;
+
+namespace AutoTesting
 {
     using System;
     using AutoFixture;
@@ -13,6 +15,8 @@
         private static Action<IFixture> _defaults = f => f.Customize(new AutoMoqCustomization());
         
         private readonly IFixture _fixture;
+
+        public ImmutableList<ISpecimenBuilder> Customizations => _fixture.Customizations.ToImmutableList();
 
         public ContextConfiguration(IFixture fixture)
         {
