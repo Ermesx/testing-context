@@ -2,6 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <PackageVersion>1.0.0</PackageVersion>
         <Title>AutoTesting - testing context</Title>
         <Description>Simple class for testing context covers common test issues https://dotnetcoretutorials.com/2018/05/12/the-testing-context</Description>

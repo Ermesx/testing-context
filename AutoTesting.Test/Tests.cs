@@ -1,4 +1,3 @@
-using System;
 using AutoTesting.Test.TestItems;
 using FluentAssertions;
 using Xunit;
@@ -77,6 +76,13 @@ public class Tests : TestingContext<TestClass>
             Inject<IFoo>(new SpecFoo());
             Inject<IFoo>(new SpecFoo());
         });
+    }
+    
+    [Fact]
+    public void Cannot_inject_null()
+    {
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => Inject<IFoo>(null!));
     }
 
     [Fact]

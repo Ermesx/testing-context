@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoFixture;
+﻿using AutoFixture;
 using Moq;
 
 namespace AutoTesting;
@@ -36,7 +34,7 @@ public abstract class TestingContext<T> : ITestingContext<T> where T : class
     public Mock<TMockType> Mock<TMockType>() where TMockType : class
     {
         var mockType = typeof(TMockType);
-        return !_mocks.ContainsKey(mockType) ? CreateNew() : _mocks[mockType] as Mock<TMockType>;
+        return _mocks.TryGetValue(mockType, out var value) ? (Mock<TMockType>)value : CreateNew();
 
         Mock<TMockType> CreateNew()
         {
@@ -49,8 +47,10 @@ public abstract class TestingContext<T> : ITestingContext<T> where T : class
     }
 
     /// <inheritdoc />
-    public void Inject<TObjectType>(TObjectType injectedObject)
+    public void Inject<TObjectType>(TObjectType injectedObject) where TObjectType : notnull
     {
+        ArgumentNullException.ThrowIfNull(injectedObject);
+        
         var objectType = typeof(TObjectType);
         if (_injectedObjects.ContainsKey(objectType))
             throw new ArgumentException($"{nameof(injectedObject)} has been injected more than once");

@@ -1,5 +1,3 @@
-using System;
-
 namespace AutoTesting.Test.TestItems;
 
 public class TestDataClass
