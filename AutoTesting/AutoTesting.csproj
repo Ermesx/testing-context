@@ -1,18 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-    </PropertyGroup>
-    
-    <PropertyGroup>
-        <EnablePackageValidation>true</EnablePackageValidation>
-        <PackageValidationBaselineVersion>3.2.24</PackageValidationBaselineVersion>
     </PropertyGroup>
 
     <PropertyGroup>
         <PackageVersion>4.0.0</PackageVersion>
+        <EnablePackageValidation>true</EnablePackageValidation>
         <Title>AutoTesting - testing context</Title>
         <Description>Simple class for testing context covers common test issues</Description>
         <Authors>Wojciech Gadziński</Authors>
