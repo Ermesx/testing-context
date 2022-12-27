@@ -1,30 +1,20 @@
 namespace AutoTesting
 {
-    using AutoFixture;
-    using AutoFixture.Dsl;
-    using AutoFixture.Kernel;
     using Moq;
-    using System;
 
     public interface ITestingContext<out T> where T : class
     {
+        /// <summary>
+        /// Configure AutoFixture customizations
+        /// </summary>
+        /// <returns>Test object</returns>
+        ContextConfiguration Configuration { get; }
+        
         /// <summary>
         /// Create instance of testing class from configured fixture
         /// </summary>
         /// <returns>Test object</returns>
         T TestObject { get; }
-
-        /// <summary>
-        /// Add customization to AutoFixture
-        /// </summary>
-        /// <returns></returns>
-        void AddCustomization(ICustomization customization);
-        
-        /// <summary>
-        /// Add customization factory function to AutoFixture
-        /// </summary>
-        /// <returns></returns>
-        void AddCustomization<TData>(Func<ICustomizationComposer<TData>, ISpecimenBuilder> composerTransformation);
 
         /// <summary>
         /// Create instance of any class with assigned data within

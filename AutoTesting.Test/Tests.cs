@@ -96,7 +96,7 @@ namespace AutoTesting.Test
         {
             // Arrange
             var customization = new TestCustomization();
-            AddCustomization(customization);
+            Configuration.Customize(customization);
 
             // Act 
             var data = Make<TestDataClass>();
@@ -110,7 +110,7 @@ namespace AutoTesting.Test
         {
             // Arrange
             const string text = "test customization";
-            AddCustomization<TestDataClass>(x => x.With(t => t.Boo, text));
+            Configuration.Customize<TestDataClass>(x => x.With(t => t.Boo, text));
 
             // Act 
             var data = Make<TestDataClass>();

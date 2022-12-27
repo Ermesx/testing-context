@@ -3,9 +3,6 @@
     using System;
     using System.Collections.Generic;
     using AutoFixture;
-    using AutoFixture.AutoMoq;
-    using AutoFixture.Dsl;
-    using AutoFixture.Kernel;
     using Moq;
     
     public abstract class TestingContext<T> : ITestingContext<T> where T : class
@@ -17,23 +14,14 @@
         protected TestingContext()
         {
             _fixture = new Fixture();
-            _fixture.Customize(new AutoMoqCustomization());
+            Configuration = new ContextConfiguration(_fixture);
 
             _mocks = new Dictionary<Type, Mock>();
             _injectedObjects = new Dictionary<Type, object>();
         }
 
         /// <inheritdoc />
-        public void AddCustomization(ICustomization customization)
-        {
-            _fixture.Customize(customization);
-        }
-
-        /// <inheritdoc />
-        public void AddCustomization<TData>(Func<ICustomizationComposer<TData>, ISpecimenBuilder> composerTransformation)
-        {
-            _fixture.Customize(composerTransformation);
-        }
+        public ContextConfiguration Configuration { get; }
 
         /// <inheritdoc />
         public T TestObject => _fixture.Create<T>();
