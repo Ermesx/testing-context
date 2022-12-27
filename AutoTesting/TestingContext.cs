@@ -1,62 +1,62 @@
-﻿namespace AutoTesting
+﻿using System;
+using System.Collections.Generic;
+using AutoFixture;
+using Moq;
+
+namespace AutoTesting;
+
+public abstract class TestingContext<T> : ITestingContext<T> where T : class
 {
-    using System;
-    using System.Collections.Generic;
-    using AutoFixture;
-    using Moq;
-    
-    public abstract class TestingContext<T> : ITestingContext<T> where T : class
+    private readonly Fixture _fixture;
+    private readonly Dictionary<Type, object> _injectedObjects;
+    private readonly Dictionary<Type, Mock> _mocks;
+
+    protected TestingContext()
     {
-        private readonly Fixture _fixture;
-        private readonly Dictionary<Type, Mock> _mocks;
-        private readonly Dictionary<Type, object> _injectedObjects;
+        _fixture = new Fixture();
+        Configuration = new ContextConfiguration(_fixture);
 
-        protected TestingContext()
+        _mocks = new Dictionary<Type, Mock>();
+        _injectedObjects = new Dictionary<Type, object>();
+    }
+
+    /// <inheritdoc />
+    public ContextConfiguration Configuration { get; }
+
+    /// <inheritdoc />
+    public T TestObject => _fixture.Create<T>();
+
+    /// <inheritdoc />
+    public TData Make<TData>()
+    {
+        return _fixture.Create<TData>();
+    }
+
+    /// <inheritdoc />
+    public Mock<TMockType> Mock<TMockType>() where TMockType : class
+    {
+        var mockType = typeof(TMockType);
+        return !_mocks.ContainsKey(mockType) ? CreateNew() : _mocks[mockType] as Mock<TMockType>;
+
+        Mock<TMockType> CreateNew()
         {
-            _fixture = new Fixture();
-            Configuration = new ContextConfiguration(_fixture);
+            var newMock = new Mock<TMockType>();
+            _mocks.Add(mockType, newMock);
+            _fixture.Inject(newMock.Object);
 
-            _mocks = new Dictionary<Type, Mock>();
-            _injectedObjects = new Dictionary<Type, object>();
+            return newMock;
         }
+    }
 
-        /// <inheritdoc />
-        public ContextConfiguration Configuration { get; }
+    /// <inheritdoc />
+    public void Inject<TObjectType>(TObjectType injectedObject)
+    {
+        var objectType = typeof(TObjectType);
+        if (_injectedObjects.ContainsKey(objectType))
+            throw new ArgumentException($"{nameof(injectedObject)} has been injected more than once");
 
-        /// <inheritdoc />
-        public T TestObject => _fixture.Create<T>();
-
-        /// <inheritdoc />
-        public TData Make<TData>() => _fixture.Create<TData>();
-
-        /// <inheritdoc />
-        public Mock<TMockType> Mock<TMockType>() where TMockType : class
-        {
-            var mockType = typeof(TMockType);
-            return !_mocks.ContainsKey(mockType) ? CreateNew() : _mocks[mockType] as Mock<TMockType>;
-
-            Mock<TMockType> CreateNew()
-            {
-                var newMock = new Mock<TMockType>();
-                _mocks.Add(mockType, newMock);
-                _fixture.Inject(newMock.Object);
-
-                return newMock;
-            }
-        }
-
-        /// <inheritdoc />
-        public void Inject<TObjectType>(TObjectType injectedObject)
-        {
-            var objectType = typeof(TObjectType);
-            if (_injectedObjects.ContainsKey(objectType))
-            {
-                throw new ArgumentException($"{nameof(injectedObject)} has been injected more than once");
-            }
-
-            // It's rare case and not impact on performance of tests code
-            _injectedObjects.Add(objectType, injectedObject);
-            _fixture.Inject(injectedObject);
-        }
+        // It's rare case and not impact on performance of tests code
+        _injectedObjects.Add(objectType, injectedObject);
+        _fixture.Inject(injectedObject);
     }
 }

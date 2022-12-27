@@ -1,26 +1,23 @@
-﻿namespace AutoTesting.Test
+﻿using AutoFixture.AutoMoq;
+using FluentAssertions;
+using Xunit;
+
+namespace AutoTesting.Test;
+
+public class ConfigurationTests : TestingContext<ContextConfiguration>
 {
-    using AutoFixture.AutoMoq;
-    using FluentAssertions;
-    using Xunit;
-
-
-    public class ConfigurationTests : TestingContext<ContextConfiguration>
+    static ConfigurationTests()
     {
-        static ConfigurationTests()
-        {
-            ContextConfiguration.ClearDefaults();
-        }
+        ContextConfiguration.ClearDefaults();
+    }
 
-        [Fact(Skip = "Run manually, because it's has static global influence")]
-        public void Can_clear_default_customizations_before_any_action()
-        {
-            // Act 
-            var testConfig = TestObject;
+    [Fact(Skip = "Run manually, because it's has static global influence")]
+    public void Can_clear_default_customizations_before_any_action()
+    {
+        // Act 
+        var testConfig = TestObject;
 
-            // Assert
-            testConfig.Customizations.Should().NotContain(c => c.GetType() == typeof(MockPostprocessor));
-        }
+        // Assert
+        testConfig.Customizations.Should().NotContain(c => c.GetType() == typeof(MockPostprocessor));
     }
 }
-

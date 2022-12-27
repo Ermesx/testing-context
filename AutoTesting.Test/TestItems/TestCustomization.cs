@@ -1,14 +1,13 @@
-namespace AutoTesting.Test.TestItems
-{
-    using AutoFixture;
+using AutoFixture;
 
-    public class TestCustomization : ICustomization
+namespace AutoTesting.Test.TestItems;
+
+public class TestCustomization : ICustomization
+{
+    public const string CustomizedText = "Customized Boo";
+
+    public void Customize(IFixture fixture)
     {
-        public const string CustomizedText = "Customized Boo";
-        
-        public void Customize(IFixture fixture)
-        {
-            fixture.Customize<TestDataClass>(x => x.With(t => t.Boo, CustomizedText));
-        }
+        fixture.Customize<TestDataClass>(x => x.With(t => t.Boo, CustomizedText));
     }
 }
