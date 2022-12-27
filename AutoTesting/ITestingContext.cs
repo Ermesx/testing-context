@@ -34,5 +34,5 @@ public interface ITestingContext<out T> where T : class
     /// </summary>
     /// <typeparam name="TObjectType"></typeparam>
     /// <returns></returns>
-    void Inject<TObjectType>(TObjectType injectedObject);
+    void Inject<TObjectType>(TObjectType injectedObject) where TObjectType : notnull;
 }

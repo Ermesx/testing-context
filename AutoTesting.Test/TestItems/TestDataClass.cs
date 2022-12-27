@@ -7,9 +7,9 @@ public class TestDataClass
         Guid = guid;
     }
 
-    public string Foo { get; set; }
+    public string? Foo { get; set; }
 
-    public string Boo { get; set; }
+    public string? Boo { get; set; }
 
     public Guid Guid { get; }
 }
