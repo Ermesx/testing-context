@@ -3,12 +3,16 @@ using Moq;
 
 namespace AutoTesting;
 
+/// <inheritdoc />
 public abstract class TestingContext<T> : ITestingContext<T> where T : class
 {
     private readonly Fixture _fixture;
     private readonly Dictionary<Type, object> _injectedObjects;
     private readonly Dictionary<Type, Mock> _mocks;
 
+    /// <summary>
+    /// Create TestingContext
+    /// </summary>
     protected TestingContext()
     {
         _fixture = new Fixture();
