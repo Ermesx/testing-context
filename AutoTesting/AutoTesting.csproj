@@ -16,6 +16,7 @@
         <Authors>Wojciech Gadziński</Authors>
         <Copyright>Copyright © Wojciech Gadziński $(CurrentYear)</Copyright>
         <PackageTags>Test;Testing;Context;AutoFixture;Fixture;xunit;moq</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,5 +30,4 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
-
 </Project>
