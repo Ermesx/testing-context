@@ -1,5 +1,4 @@
 # AutoTesting
-[![Build status](https://ci.appveyor.com/api/projects/status/rndm33j6725jgdv5?svg=true)](https://ci.appveyor.com/project/Ermesx/testing-context)
 ![](https://img.shields.io/nuget/v/AutoTesting.svg)
 
 Library with class which covers common testing issues below.
