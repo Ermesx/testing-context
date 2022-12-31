@@ -29,10 +29,7 @@ public abstract class TestingContext<T> : ITestingContext<T> where T : class
     public T TestObject => _fixture.Create<T>();
 
     /// <inheritdoc />
-    public TData Make<TData>()
-    {
-        return _fixture.Create<TData>();
-    }
+    public TData Make<TData>() => _fixture.Create<TData>();
 
     /// <inheritdoc />
     public Mock<TMockType> Mock<TMockType>() where TMockType : class
@@ -54,10 +51,12 @@ public abstract class TestingContext<T> : ITestingContext<T> where T : class
     public void Inject<TObjectType>(TObjectType injectedObject) where TObjectType : notnull
     {
         ArgumentNullException.ThrowIfNull(injectedObject);
-        
+
         var objectType = typeof(TObjectType);
         if (_injectedObjects.ContainsKey(objectType))
+        {
             throw new ArgumentException($"{nameof(injectedObject)} has been injected more than once");
+        }
 
         // It's rare case and not impact on performance of tests code
         _injectedObjects.Add(objectType, injectedObject);

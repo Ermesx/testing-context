@@ -68,22 +68,18 @@ public class Tests : TestingContext<TestClass>
     }
 
     [Fact]
-    public void Cannot_inject_the_same_class_twice()
-    {
+    public void Cannot_inject_the_same_class_twice() =>
         // Act & Assert
         Assert.Throws<ArgumentException>(() =>
         {
             Inject<IFoo>(new SpecFoo());
             Inject<IFoo>(new SpecFoo());
         });
-    }
-    
+
     [Fact]
-    public void Cannot_inject_null()
-    {
+    public void Cannot_inject_null() =>
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => Inject<IFoo>(null!));
-    }
 
     [Fact]
     public void Can_create_any_mock_data()

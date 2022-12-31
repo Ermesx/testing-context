@@ -6,10 +6,7 @@ namespace AutoTesting.Test;
 
 public class ConfigurationTests : TestingContext<ContextConfiguration>
 {
-    static ConfigurationTests()
-    {
-        ContextConfiguration.ClearDefaults();
-    }
+    static ConfigurationTests() => ContextConfiguration.ClearDefaults();
 
     [Fact(Skip = "Run manually, because it's has static global influence")]
     public void Can_clear_default_customizations_before_any_action()

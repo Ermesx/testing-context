@@ -2,10 +2,7 @@ namespace AutoTesting.Test.TestItems;
 
 public class TestDataClass
 {
-    public TestDataClass(Guid guid)
-    {
-        Guid = guid;
-    }
+    public TestDataClass(Guid guid) => Guid = guid;
 
     public string? Foo { get; set; }
 

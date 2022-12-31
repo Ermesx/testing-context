@@ -32,7 +32,7 @@ public interface ITestingContext<out T> where T : class
     /// Generates a mock for a class/interfaces and injects it into the final context.
     /// </summary>
     /// <typeparam name="TMockType">Type of class/interface to mock.</typeparam>
-    /// <returns><see cref="Mock{TMockType}"/> of class/interface.</returns>
+    /// <returns><see cref="Mock{TMockType}" /> of class/interface.</returns>
     Mock<TMockType> Mock<TMockType>() where TMockType : class;
 
     /// <summary>

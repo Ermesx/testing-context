@@ -7,9 +7,9 @@ using AutoFixture.Kernel;
 namespace AutoTesting;
 
 /// <summary>
-/// Represents configuration of default and additional features of <see cref="Fixture"/>.
+/// Represents configuration of default and additional features of <see cref="Fixture" />.
 /// </summary>
-/// <remarks>Default customization is <see cref="AutoMoqCustomization"/></remarks>
+/// <remarks>Default customization is <see cref="AutoMoqCustomization" /></remarks>
 public class ContextConfiguration
 {
     private static Action<IFixture> _defaults = _ => _.Customize(new AutoMoqCustomization());
@@ -19,7 +19,7 @@ public class ContextConfiguration
     /// <summary>
     /// Create configuration.
     /// </summary>
-    /// <param name="fixture"><see cref="Fixture"/> to configure</param>
+    /// <param name="fixture"><see cref="Fixture" /> to configure</param>
     public ContextConfiguration(IFixture fixture)
     {
         _fixture = fixture;
@@ -27,7 +27,7 @@ public class ContextConfiguration
     }
 
     /// <summary>
-    /// Get <see cref="Fixture"/> customizations.
+    /// Get <see cref="Fixture" /> customizations.
     /// </summary>
     public ImmutableList<ISpecimenBuilder> Customizations => _fixture.Customizations.ToImmutableList();
 
@@ -39,10 +39,14 @@ public class ContextConfiguration
     /// <summary>
     /// Customizes the creation algorithm for all objects of a given type.
     /// </summary>
-    /// <param name="composerTransformation"> A function that customizes a given <see cref="ICustomizationComposer{T}"/> and returns the modified composer.</param>
+    /// <param name="composerTransformation">
+    /// A function that customizes a given <see cref="ICustomizationComposer{T}" /> and
+    /// returns the modified composer.
+    /// </param>
     /// <typeparam name="TData">The type of object to customize.</typeparam>
-    /// <remarks>The resulting <see cref="ISpecimenBuilder"/> is added to Customizations.</remarks>
-    public void Customize<TData>(Func<ICustomizationComposer<TData>, ISpecimenBuilder> composerTransformation) => _fixture.Customize(composerTransformation);
+    /// <remarks>The resulting <see cref="ISpecimenBuilder" /> is added to Customizations.</remarks>
+    public void Customize<TData>(Func<ICustomizationComposer<TData>, ISpecimenBuilder> composerTransformation) =>
+        _fixture.Customize(composerTransformation);
 
     /// <summary>
     /// Applies a customization.

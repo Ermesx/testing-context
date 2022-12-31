@@ -11,13 +11,7 @@ public class TestClass
         _enum = @enum;
     }
 
-    public string GetBoo()
-    {
-        return _foo.Boo();
-    }
+    public string GetBoo() => _foo.Boo();
 
-    public TestEnum GetEnum()
-    {
-        return _enum;
-    }
+    public TestEnum GetEnum() => _enum;
 }
