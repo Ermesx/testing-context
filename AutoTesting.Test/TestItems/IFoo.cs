@@ -1,7 +1,6 @@
-namespace AutoTesting.Test.TestItems
+namespace AutoTesting.Test.TestItems;
+
+public interface IFoo
 {
-    public interface IFoo
-    {
-        string Boo();
-    }
+    string Boo();
 }

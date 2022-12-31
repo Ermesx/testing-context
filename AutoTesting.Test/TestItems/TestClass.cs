@@ -1,24 +1,17 @@
-namespace AutoTesting.Test.TestItems
+namespace AutoTesting.Test.TestItems;
+
+public class TestClass
 {
-    public class TestClass
+    private readonly TestEnum _enum;
+    private readonly IFoo _foo;
+
+    public TestClass(IFoo foo, TestEnum @enum)
     {
-        private readonly IFoo _foo;
-        private readonly TestEnum _enum;
-
-        public TestClass(IFoo foo, TestEnum @enum)
-        {
-            _foo = foo;
-            _enum = @enum;
-        }
-
-        public string GetBoo()
-        {
-            return _foo.Boo();
-        }
-
-        public TestEnum GetEnum()
-        {
-            return _enum;
-        }
+        _foo = foo;
+        _enum = @enum;
     }
+
+    public string GetBoo() => _foo.Boo();
+
+    public TestEnum GetEnum() => _enum;
 }

@@ -1,9 +1,8 @@
-namespace AutoTesting.Test.TestItems
+namespace AutoTesting.Test.TestItems;
+
+public enum TestEnum
 {
-    public enum TestEnum
-    {
-        T1,
-        T2,
-        T3
-    }
+    T1,
+    T2,
+    T3
 }

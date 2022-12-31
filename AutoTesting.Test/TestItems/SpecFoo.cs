@@ -1,10 +1,6 @@
-namespace AutoTesting.Test.TestItems
+namespace AutoTesting.Test.TestItems;
+
+public class SpecFoo : IFoo
 {
-    public class SpecFoo : IFoo
-    {
-        public string Boo()
-        {
-            return "SpecFoo";
-        }
-    }
+    public string Boo() => "SpecFoo";
 }

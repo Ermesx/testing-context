@@ -1,18 +1,12 @@
-namespace AutoTesting.Test.TestItems
+namespace AutoTesting.Test.TestItems;
+
+public class TestDataClass
 {
-    using System;
+    public TestDataClass(Guid guid) => Guid = guid;
 
-    public class TestDataClass
-    {
-        public TestDataClass(Guid guid)
-        {
-            Guid = guid;
-        }
+    public string? Foo { get; set; }
 
-        public string Foo { get; set; }
-            
-        public string Boo { get; set; }
-            
-        public Guid Guid { get; }
-    }
+    public string? Boo { get; set; }
+
+    public Guid Guid { get; }
 }

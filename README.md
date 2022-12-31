@@ -1,8 +1,5 @@
 # AutoTesting
-[![Build status](https://ci.appveyor.com/api/projects/status/rndm33j6725jgdv5?svg=true)](https://ci.appveyor.com/project/Ermesx/testing-context)
 ![](https://img.shields.io/nuget/v/AutoTesting.svg)
-
-Inspired by article https://dotnetcoretutorials.com/2018/05/12/the-testing-context/
 
 Library with class which covers common testing issues below.
 
@@ -12,80 +9,7 @@ Library with class which covers common testing issues below.
 * Changes to a constructor of a class should not require editing all tests for that class.
 * Boilerplate code within the test class should be kept to a minimum.
 
-### What's new in 3.2
-
-* Upgrade to .net Core 3+ and update dependencies
-
-### What's new in 3.1
-
-* Add customization API for AutoFixture
-```diff
-public class TestingContext<T> 
-{
-+    void AddCustomization(ICustomization customization);
-
-+    void AddCustomization<TData>(Func<ICustomizationComposer<TData>, ISpecimenBuilder> composerTransformation);
-}
-```
-
-* Obsolete Fixture method and add new Make method instead
-
-```diff
-public class TestingContext<T> 
-{
-+    [Obsolete("Use Make<> instead")]
-     TData Fixture<TData>();
-+    TData Make<TData>();
-}
-```
-* Update dependecies
-
-### What's new in 3.0
-
-* Better API naming 
-```diff
-public class TestingContext<T> 
-{
-+    T TestObject { get; }
--    T ClassUnderTest { get; }
-    
-+    TData Fixture<TData>();
--    TData MockData<TData>();
-    
-+    Mock<TMockType> Mock<TMockType>() where TMockType : class;
--    void ConfigureMock<TMockType>(Action<TMockType> configure) where TMockType : class;
-
-+    void Inject<TObjectType>(TObjectType injectedObject);
--    void InjectObject<TObjectType>(TObjectType injectedObject);
-}
-```
-* New interface for mocking even TestingContext
-
-```csharp
-public interface ITestingContext<out T> where T : class
-{
-    ...
-}
-```
-
-* Now you use `VerifyAll` method form Mock in assertions
-
-``` csharp
-[Fact]
-public void WhenGetNamesExceptJohnCalled_JohnIsNotReturned()
-{
-    var mock = Mock<ITestRepository>().Setup(x => x.GetNames()).Returns(new List<string> { "bob", "john" });
- 
-    var result = TestObject.GetNamesExceptJohn();
-    
-    Assert.IsNotNull(result);
-    ...
-    mock.VerifyAll();
-}
-
-```
-
-#### Install package
+## Install package
 ```
 dotnet add package AutoTesting 
 ```

@@ -1,78 +1,65 @@
-﻿namespace AutoTesting
+﻿using AutoFixture;
+using Moq;
+
+namespace AutoTesting;
+
+/// <inheritdoc />
+public abstract class TestingContext<T> : ITestingContext<T> where T : class
 {
-    using System;
-    using System.Collections.Generic;
-    using AutoFixture;
-    using AutoFixture.AutoMoq;
-    using AutoFixture.Dsl;
-    using AutoFixture.Kernel;
-    using Moq;
-    
-    public abstract class TestingContext<T> : ITestingContext<T> where T : class
+    private readonly Fixture _fixture;
+    private readonly Dictionary<Type, object> _injectedObjects;
+    private readonly Dictionary<Type, Mock> _mocks;
+
+    /// <summary>
+    /// Create TestingContext
+    /// </summary>
+    protected TestingContext()
     {
-        private readonly Fixture _fixture;
-        private readonly Dictionary<Type, Mock> _mocks;
-        private readonly Dictionary<Type, object> _injectedObjects;
+        _fixture = new Fixture();
+        Configuration = new ContextConfiguration(_fixture);
 
-        protected TestingContext()
+        _mocks = new Dictionary<Type, Mock>();
+        _injectedObjects = new Dictionary<Type, object>();
+    }
+
+    /// <inheritdoc />
+    public ContextConfiguration Configuration { get; }
+
+    /// <inheritdoc />
+    public T TestObject => _fixture.Create<T>();
+
+    /// <inheritdoc />
+    public TData Make<TData>() => _fixture.Create<TData>();
+
+    /// <inheritdoc />
+    public Mock<TMockType> Mock<TMockType>() where TMockType : class
+    {
+        var mockType = typeof(TMockType);
+        return _mocks.TryGetValue(mockType, out var value) ? (Mock<TMockType>)value : CreateNew();
+
+        Mock<TMockType> CreateNew()
         {
-            _fixture = new Fixture();
-            _fixture.Customize(new AutoMoqCustomization());
+            var newMock = new Mock<TMockType>();
+            _mocks.Add(mockType, newMock);
+            _fixture.Inject(newMock.Object);
 
-            _mocks = new Dictionary<Type, Mock>();
-            _injectedObjects = new Dictionary<Type, object>();
+            return newMock;
+        }
+    }
+
+    /// <inheritdoc />
+    public void Inject<TObjectType>(TObjectType injectedObject) where TObjectType : notnull
+    {
+        ArgumentNullException.ThrowIfNull(injectedObject);
+
+        var objectType = typeof(TObjectType);
+        if (_injectedObjects.ContainsKey(objectType))
+        {
+            throw new ArgumentException($"{nameof(injectedObject)} has been injected more than once");
         }
 
-        /// <inheritdoc />
-        public void AddCustomization(ICustomization customization)
-        {
-            _fixture.Customize(customization);
-        }
-
-        /// <inheritdoc />
-        public void AddCustomization<TData>(Func<ICustomizationComposer<TData>, ISpecimenBuilder> composerTransformation)
-        {
-            _fixture.Customize(composerTransformation);
-        }
-
-        /// <inheritdoc />
-        public T TestObject => _fixture.Create<T>();
-
-        /// <inheritdoc />
-        [Obsolete("Use Make<> instead")]
-        public TData Fixture<TData>() => Make<TData>();
-        
-        /// <inheritdoc />
-        public TData Make<TData>() => _fixture.Create<TData>();
-
-        /// <inheritdoc />
-        public Mock<TMockType> Mock<TMockType>() where TMockType : class
-        {
-            var mockType = typeof(TMockType);
-            return !_mocks.ContainsKey(mockType) ? CreateNew() : _mocks[mockType] as Mock<TMockType>;
-
-            Mock<TMockType> CreateNew()
-            {
-                var newMock = new Mock<TMockType>();
-                _mocks.Add(mockType, newMock);
-                _fixture.Inject(newMock.Object);
-
-                return newMock;
-            }
-        }
-
-        /// <inheritdoc />
-        public void Inject<TObjectType>(TObjectType injectedObject)
-        {
-            var objectType = typeof(TObjectType);
-            if (_injectedObjects.ContainsKey(objectType))
-            {
-                throw new ArgumentException($"{nameof(injectedObject)} has been injected more than once");
-            }
-
-            // It's rare case and not impact on performance of tests code
-            _injectedObjects.Add(objectType, injectedObject);
-            _fixture.Inject(injectedObject);
-        }
+        // It's rare case and not impact on performance of tests code
+        _injectedObjects.Add(objectType, injectedObject);
+        _fixture.Inject(injectedObject);
     }
 }
