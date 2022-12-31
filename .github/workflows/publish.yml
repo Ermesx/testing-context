@@ -1,12 +1,6 @@
 ﻿name: publish
 on:
-  workflow_dispatch: 
-  push:
-    branches:
-      - 'master'       
-  pull_request:
-    branches:
-      - '*'          
+  workflow_dispatch:     
   release:
     types:
       - published
@@ -22,7 +16,6 @@ defaults:
 
 jobs:
   create_nuget:
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
