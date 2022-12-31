@@ -21,17 +21,3 @@ jobs:
         uses: actions/setup-dotnet@v3
       - name: Run tests
         run: dotnet test --configuration Release
-  
-  analyze_code:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: Run NuGet restore
-        run: dotnet restore 
-      
-      - name: Run .NET Code Analysis
-        uses: dotnet/code-analysis@v1
-        id: code-analysis
-        with:
-          build-breaking: true
